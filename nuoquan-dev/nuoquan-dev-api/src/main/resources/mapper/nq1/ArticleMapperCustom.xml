@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nuoquan.mapper.nq1.ArticleMapperCustom">
+  <resultMap id="BaseResultMap" type="com.nuoquan.pojo.vo.ArticleVO">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="article_title" jdbcType="VARCHAR" property="articleTitle" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="tags" jdbcType="VARCHAR" property="tags" />
+    <result column="article_content" jdbcType="LONGVARBINARY" property="articleContent" />
+    <result column="like_num" jdbcType="INTEGER" property="likeNum" />
+    <result column="dislike_num" jdbcType="INTEGER" property="dislikeNum" />
+    <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
+    <result column="collect_num" jdbcType="INTEGER" property="collectNum" />
+    <result column="popularity" jdbcType="INTEGER" property="popularity" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="is_anonymous" jdbcType="TINYINT" property="isAnonymous" />
+    <result column="view_num" property="viewNum" jdbcType="INTEGER" />
+    
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="face_img" property="faceImg" jdbcType="VARCHAR" />
+    <result column="face_img_thumb" property="faceImgThumb" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="list" resultMap="BaseResultMap">
+ 	select a.*, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.article a
+   	left join nuoquan.user u on u.id = a.user_id
+  	where
+  		1 = 1
+  	order by a.create_date desc
+  </select>
+  
+  <select id="listCheckOnly" resultMap="BaseResultMap">
+ 	select a.*, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.article a
+   	left join nuoquan.user u on u.id = a.user_id
+  	where
+  		1 = 1
+  		and a.status = 2
+  	order by a.create_date desc
+  </select>
+  
+  <select id="queryAllArticles" resultMap="BaseResultMap">
+ 	select a.*, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.article a
+   	left join nuoquan.user u on u.id = a.user_id
+  	where
+  		1 = 1
+  		and a.status = 1
+  	order by a.create_date desc
+  </select>
+  
+  <update id="addArticleLikeCount" parameterType="String">
+  	update nuoquan.article set like_num=like_num+1 where id=#{articleId}
+  </update>
+  
+  <update id="reduceArticleLikeCount" parameterType="String">
+  	update nuoquan.article set like_num=like_num-1 where id=#{articleId}
+  </update>
+  
+  <update id="addArticleCollectCount" parameterType="String">
+  	update nuoquan.article set collect_num=collect_num+1 where id=#{articleId}
+  </update>
+  
+  <update id="reduceArticleCollectCount" parameterType="String">
+  	update nuoquan.article set collect_num=collect_num-1 where id=#{articleId}
+  </update>
+  
+  <update id="addArticleCommentCount" parameterType="String">
+  	update nuoquan.article set comment_num=comment_num+1 where id=#{articleId}
+  </update>
+  
+  <select id="searchArticleContentYang" resultMap="BaseResultMap" parameterType="String">
+  	select a.*, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.article a
+   	left join nuoquan.user u on u.id = a.user_id
+  	where
+  		1 = 1
+  		and (<if test=" searchKeywords != null and searchKeywords != '' ">
+  			a.article_content like '%${searchKeywords}%'
+  			or a.article_title like '%${searchKeywords}%'
+  			or a.tags like '%${searchKeywords}%'
+  		</if>)
+  		and a.status = 1
+  		<!-- and a.is_anonymous = 0 -->
+  	order by a.create_date desc
+  </select>
+  
+  <update id="updatePopByFunction">
+  	update nuoquan.article as a left join 
+		(select target_id, count(target_id) as c_in24h from nuoquan.user_comment
+		where 
+		1=1
+		and target_type = "article"
+		and UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(create_date) &lt;= 86400
+		GROUP BY target_id) as c on a.id = c.target_id left join
+			(select target_id, count(target_id) as l_in24h from nuoquan.user_like
+			where 
+			1=1
+			and target_type = "article"
+			and UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(create_date) &lt;= 86400
+			GROUP BY target_id) as l on a.id=l.target_id
+	set a.popularity = if(c.target_id is null,
+						if(l.target_id is null, 0, l.l_in24h),
+							if(l.target_id is null, c.c_in24h, c.c_in24h+l.l_in24h));
+  </update>
+  
+<!-- 【勿删】updatePopByFunction 的数据库测试用例 mysql代码：查看 c_in24h + l_in24h = popularity? by Jerrio
+select * from nuoquan.article as a left join
+	(select target_id, count(target_id) as c_in24h from nuoquan.user_comment
+	where
+	1=1
+	and target_type = "article"
+	and UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(create_date) <= 86400
+	GROUP BY target_id) as c on a.id = c.target_id left join
+		(select target_id, count(target_id) as l_in24h from nuoquan.user_like
+		where
+		1=1
+		and target_type = "article"
+		and UNIX_TIMESTAMP(NOW()) - UNIX_TIMESTAMP(create_date) <= 86400
+		GROUP BY target_id) as l on a.id=l.target_id -->
+  	
+  <select id="getArticleByPopularity" resultMap="BaseResultMap">
+  	select a.*, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.article a
+   	left join nuoquan.user u on u.id = a.user_id
+  	where
+  		1 = 1
+  		and a.status = 1 
+  	order by a.popularity desc, a.create_date desc
+  </select>
+  
+  <select id="getArticleById" resultMap="BaseResultMap">
+  	select a.*, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.article a
+   	left join nuoquan.user u on u.id = a.user_id
+  	where
+  		1 = 1
+  		and a.id = #{articleId}
+  </select>
+  
+  <select id="queryAllMyHisArticle" resultMap="BaseResultMap" parameterType="String">
+  	select a.*, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.article a
+  	left join nuoquan.user u on u.id = a.user_id
+  	where
+  		 1 = 1
+  		 and a.user_id = #{userId}
+  		 and a.status != 0
+  	order by a.create_date desc
+  </select>
+  
+  <select id="queryOthersLegalHisArticle" resultMap="BaseResultMap" parameterType="String">
+  	select a.*, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.article a
+  	left join nuoquan.user u on u.id = a.user_id
+  	where
+  		1 = 1
+  		and a.user_id = #{targetId}
+  		and a.status = 1
+  	order by a.create_date desc
+  </select>
+  
+  <select id="queryCollectArticle" resultMap="BaseResultMap" parameterType="String">
+  	select TableA.* from nuoquan.user_collect uc left join
+		(select a.*, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.article a
+	  	left join nuoquan.user u on u.id = a.user_id
+	  	where
+	  		 1 = 1
+	  	order by a.create_date desc) TableA on uc.target_id = TableA.id
+	where
+		1 = 1
+        and TableA.status = 1
+	  	and uc.target_type = 'article'
+	  	and uc.user_id = #{targetId}
+  </select>
+  
+  <update id="addViewCount" parameterType="String">
+  	update article set view_num=view_num+1 where id=#{articleId}
+  </update>
+</mapper>

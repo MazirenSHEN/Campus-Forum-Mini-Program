@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nuoquan.mapper.nq1.AdminRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.nuoquan.pojo.AdminRole" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="queryAdminUserRoles" parameterType="String" resultMap="BaseResultMap">
+        select r.id,r.name from admin_role r
+		LEFT JOIN admin_user_role ur ON  r.id=ur.role_id
+		where ur.admin_user_id=#{userid}
+  </select>
+  
+</mapper>

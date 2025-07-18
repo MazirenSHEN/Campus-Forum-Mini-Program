@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nuoquan.mapper.nq1.AuthenticatedUserMapper" >
+    <resultMap id="BaseResultMap" type="com.nuoquan.pojo.AuthenticatedUser" >
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <result column="id" property="id" jdbcType="VARCHAR" />
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="type" property="type" jdbcType="VARCHAR" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <select id="list" resultMap="BaseResultMap">
+        select au.* from nuoquan.authenticated_user au
+        where
+            1 = 1
+        and type != 0
+        order by a.create_date desc
+    </select>
+
+    <select id="listOfficialOnly" resultMap="BaseResultMap">
+        select au.* from nuoquan.authenticated_user au
+        where
+            1 = 1
+          and type = 1
+        order by a.create_date desc
+    </select>
+
+    <select id="listNormalAuthOnly" resultMap="BaseResultMap">
+        select au.* from nuoquan.authenticated_user au
+        where
+            1 = 1
+          and type = 2
+        order by a.create_date desc
+    </select>
+
+    <select id="getAuthUserById" resultMap="BaseResultMap" parameterType="String">
+        select au.* from nuoquan.authenticated_user au
+        where
+            1 = 1
+          and au.user_id = #{userId}
+          and a.status != 0
+        order by a.create_date desc
+    </select>
+
+</mapper>

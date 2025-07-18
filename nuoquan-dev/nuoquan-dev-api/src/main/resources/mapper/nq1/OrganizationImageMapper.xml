@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nuoquan.mapper.nq1.OrganizationImageMapper" >
+    <resultMap id="BaseResultMap" type="com.nuoquan.pojo.OrganizationImage" >
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="organization_id" property="organizationId" jdbcType="VARCHAR" />
+        <result column="image_path" property="imagePath" jdbcType="VARCHAR" />
+        <result column="image_order" property="imageOrder" jdbcType="INTEGER" />
+        <result column="status" property="status" jdbcType="INTEGER" />
+    </resultMap>
+
+    <select id="getOrganizationImage" resultMap="BaseResultMap">
+        select * from nuoquan.organization_image
+        where
+        1 = 1
+        and organization_id = #{organizationId}
+        order by nuoquan.organization_image.image_order asc
+    </select>
+
+    <select id="getOrganizationImageByIdAndOrder" resultMap="BaseResultMap">
+        select * from nuoquan.organization_image
+        where
+        organization_id = #{organizationId}
+        and image_order = #{imageOrder}
+    </select>
+
+    <update id="updateStatusToUnreadable" >
+        update nuoquan.organization_image set status=0 where organization_id=#{organizationId} and image_order=#{imageOrder}
+    </update>
+</mapper>

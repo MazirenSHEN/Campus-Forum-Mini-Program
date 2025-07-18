@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nuoquan.mapper.nq1.SourceMapMapper">
+  <resultMap id="BaseResultMap" type="com.nuoquan.pojo.SourceMap">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="author_id" jdbcType="VARCHAR" property="authorId" />
+    <result column="source" jdbcType="VARCHAR" property="source" />
+  </resultMap>
+</mapper>

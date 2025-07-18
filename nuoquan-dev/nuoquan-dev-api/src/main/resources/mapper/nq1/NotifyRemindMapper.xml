@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nuoquan.mapper.nq1.NotifyRemindMapper" >
+  <resultMap id="BaseResultMap" type="com.nuoquan.pojo.NotifyRemind" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="id" property="id" jdbcType="VARCHAR" />
+    <result column="sender_id" property="senderId" jdbcType="VARCHAR" />
+    <result column="sender_action" property="senderAction" jdbcType="VARCHAR" />
+    <result column="source_id" property="sourceId" jdbcType="VARCHAR" />
+    <result column="target_id" property="targetId" jdbcType="VARCHAR" />
+    <result column="target_type" property="targetType" jdbcType="VARCHAR" />
+    <result column="recipient_id" property="recipientId" jdbcType="VARCHAR" />
+    <result column="sign_flag" property="signFlag" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="read_date" property="readDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+</mapper>

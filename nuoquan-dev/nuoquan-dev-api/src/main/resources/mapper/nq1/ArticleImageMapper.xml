@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nuoquan.mapper.nq1.ArticleImageMapper" >
+  <resultMap id="BaseResultMap" type="com.nuoquan.pojo.ArticleImage" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="article_id" property="articleId" jdbcType="VARCHAR" />
+    <result column="image_path" property="imagePath" jdbcType="VARCHAR" />
+    <result column="image_order" property="imageOrder" jdbcType="INTEGER" />
+  </resultMap>
+  
+  <select id="getArticleImgs" resultMap="BaseResultMap">
+  	select * from nuoquan.article_image
+  	where
+  		1 = 1
+  		and article_id = #{articleId}
+  	order by nuoquan.article_image.image_order asc
+  </select>
+</mapper>

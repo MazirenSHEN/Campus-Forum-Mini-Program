@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nuoquan.mapper.nq1.UserCommentMapper" >
+  <resultMap id="BaseResultMap" type="com.nuoquan.pojo.UserComment" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="from_user_id" property="fromUserId" jdbcType="VARCHAR" />
+    <result column="to_user_id" property="toUserId" jdbcType="VARCHAR" />
+    <result column="target_type" property="targetType" jdbcType="VARCHAR" />
+    <result column="target_id" property="targetId" jdbcType="VARCHAR" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="like_num" property="likeNum" jdbcType="INTEGER" />
+    <result column="dislike_num" property="dislikeNum" jdbcType="INTEGER" />
+    <result column="comment_num" property="commentNum" jdbcType="INTEGER" />
+    <result column="reported_num" property="reportedNum" jdbcType="INTEGER" />
+    <result column="under_comment_id" property="underCommentId" jdbcType="VARCHAR" />
+    <result column="sign_flag" property="signFlag" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+
+  <update id="addLikeCount" parameterType="String">
+    update nuoquan.user_comment set like_num=like_num+1 where id=#{commentId}
+  </update>
+
+  <update id="reduceLikeCount" parameterType="String">
+    update nuoquan.user_comment set like_num=like_num-1 where id=#{commentId}
+  </update>
+
+  <update id="addCommentCount" parameterType="String">
+    update nuoquan.user_comment set comment_num=comment_num+1 where id=#{commentId}
+  </update>
+
+  <update id="reduceCommentCount" parameterType="String">
+    update nuoquan.user_comment set comment_num=comment_num-1 where id=#{commentId}
+  </update>
+
+  <update id="addReportedCount" parameterType="String">
+    update nuoquan.user_comment set reported_num=reported_num+1 where id=#{commentId}
+  </update>
+
+  <select id="queryReportedCommentByCreateTime" resultMap="BaseResultMap">
+    select * from nuoquan.user_comment uc where reported_num!=0 order by uc.create_date desc
+  </select>
+
+  <select id="queryReportedCommentByReportedNum" resultMap="BaseResultMap">
+    select * from nuoquan.user_comment uc where reported_num!=0 order by uc.reported_num desc
+  </select>
+
+  <select id="queryCommentToMe" resultMap="BaseResultMap">
+    select * from nuoquan.user_comment uc where to_user_id=#{userId} order by uc.create_date desc
+  </select>
+
+  <select id="querySubCommentNum" resultType="Integer">
+    select comment_num from nuoquan.user_comment uc where uc.id=#{commentId}
+  </select>
+
+  <select id="queryAllSubComment" resultMap="BaseResultMap">
+    select * from nuoquan.user_comment uc where uc.under_comment_id=#{commentId}
+  </select>
+</mapper>

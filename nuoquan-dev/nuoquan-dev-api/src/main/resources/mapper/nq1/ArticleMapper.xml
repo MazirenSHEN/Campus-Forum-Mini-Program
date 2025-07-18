@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nuoquan.mapper.nq1.ArticleMapper">
+  <resultMap id="BaseResultMap" type="com.nuoquan.pojo.Article">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="article_title" jdbcType="VARCHAR" property="articleTitle" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="tags" jdbcType="VARCHAR" property="tags" />
+    <result column="article_content" jdbcType="LONGVARBINARY" property="articleContent" />
+    <result column="like_num" jdbcType="INTEGER" property="likeNum" />
+    <result column="dislike_num" jdbcType="INTEGER" property="dislikeNum" />
+    <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
+    <result column="collect_num" jdbcType="INTEGER" property="collectNum" />
+    <result column="reported_num" jdbcType="INTEGER" property="reportedNum" />
+    <result column="popularity" jdbcType="INTEGER" property="popularity" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="is_anonymous" jdbcType="TINYINT" property="isAnonymous" />
+    <result column="view_num" property="viewNum" jdbcType="INTEGER" />
+  </resultMap>
+
+  <update id="addLikeCount" parameterType="String">
+  	update nuoquan.article set like_num=like_num+1 where id=#{articleId}
+  </update>
+
+  <update id="reduceLikeCount" parameterType="String">
+  	update nuoquan.article set like_num=like_num-1 where id=#{articleId}
+  </update>
+
+  <update id="addCollectCount" parameterType="String">
+  	update nuoquan.article set collect_num=collect_num+1 where id=#{articleId}
+  </update>
+
+  <update id="reduceCollectCount" parameterType="String">
+  	update nuoquan.article set collect_num=collect_num-1 where id=#{articleId}
+  </update>
+
+  <update id="addCommentCount" parameterType="String">
+  	update nuoquan.article set comment_num=comment_num+1 where id=#{articleId}
+  </update>
+
+  <update id="reduceCommentCount" parameterType="String">
+    update nuoquan.article set comment_num=comment_num-1 where id=#{articleId}
+  </update>
+
+  <update id="reduceCommentCountSpecific">
+    update nuoquan.article set comment_num=#{newCommentNum} where id=#{articleId}
+  </update>
+
+  <update id="addReportedCount" parameterType="String">
+    update nuoquan.article set reported_num=reported_num+1 where id=#{articleId}
+  </update>
+
+  <update id="addViewCount" parameterType="String">
+  	update nuoquan.article set view_num=view_num+1 where id=#{articleId}
+  </update>
+
+  <select id="selectArticleStatus" parameterType="String" resultType="Integer">
+    select status from nuoquan.article a where a.id = #{articleId}
+  </select>
+
+  <select id="queryReportedArticleByCreateTime" resultMap="BaseResultMap">
+    select * from nuoquan.article a where reported_num!=0 order by a.create_date desc
+  </select>
+
+  <select id="queryReportedArticleByReportedNum" resultMap="BaseResultMap">
+    select * from nuoquan.article a where reported_num!=0 order by a.reported_num desc
+  </select>
+
+  <select id="selectArticleCommentNum" parameterType="String" resultType="Integer">
+    select comment_num from nuoquan.article a where a.id=#{articleId}
+  </select>
+</mapper>
+

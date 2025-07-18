@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nuoquan.mapper.nq1.VoteUserMapper" >
+  <resultMap id="BaseResultMap" type="com.nuoquan.pojo.VoteUser" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="vote_id" property="voteId" jdbcType="VARCHAR" />
+    <result column="option_id" property="optionId" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <select id="getSelectedOptionId" resultMap="BaseResultMap" parameterType="String">
+  	select vu.option_id from nuoquan.vote_user vu
+  	where
+  		1 = 1
+  		and vote_id = #{id}
+  		and user_id = #{userId}
+  </select>
+  
+</mapper>

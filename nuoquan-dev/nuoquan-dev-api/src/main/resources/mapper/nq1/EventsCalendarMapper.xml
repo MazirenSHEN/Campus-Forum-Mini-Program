@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nuoquan.mapper.nq1.EventsCalendarMapper">
+    <resultMap id="BaseResultMap" type="com.nuoquan.pojo.vo.EventsCalendarVO">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="VARCHAR" property="id" />
+        <result column="title" jdbcType="VARCHAR" property="eventTitle" />
+        <result column="faculty" jdbcType="INTEGER" property="faculty" />
+        <result column="degree" jdbcType="INTEGER" property="degree" />
+        <result column="venue" jdbcType="VARCHAR" property="eventVenue" />
+        <result column="date" jdbcType="INTEGER" property="eventDate" />
+        <result column="time" jdbcType="VARCHAR" property="eventTime" />
+        <result column="status" jdbcType="INTEGER" property="status" />
+        <result column="tags" jdbcType="INTEGER" property="tags" />
+        <result column="description" jdbcType="VARCHAR" property="description" />
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    </resultMap>
+
+    <select id="queryEventsCalendarByDate" resultMap="BaseResultMap" parameterType="Integer">
+        select ec.* from nuoquan.events_calendar ec
+        where
+            1 = 1
+          and ec.status = 1
+          and ec.date = #{targetDate}
+          and ec.faculty = #{faculty}
+          and ec.degree = #{degree}
+        order by ec.create_date asc
+    </select>
+
+    <select id="queryAllEventsCalendar" resultMap="BaseResultMap">
+        select ec.* from nuoquan.events_calendar ec
+        where
+            1 = 1
+          and ec.status = 1
+        order by ec.date asc
+    </select>
+
+</mapper>
+

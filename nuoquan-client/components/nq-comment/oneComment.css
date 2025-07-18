@@ -1,0 +1,105 @@
+/* 一条卡片的CSS开始， HTML见末尾
+ */
+.comment{
+	display: flex;
+	flex-direction: column;
+}
+
+.comment-info {
+	height: 24px;
+	width: 100%;
+	position: relative;
+	margin-top: 8px;
+	display: flex;
+}
+
+.comment-info image {
+	width: 24px;
+	height: 24px;
+	border-radius: 12px;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+.name_text {
+	font-size: 12px;
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	line-height: 24px;
+	height: 24px;
+	color: #9B9B9B;
+	display: inline-block;
+	/* position: absolute;
+		top: 0;
+		left: 32px; */
+	max-width: 120px;
+	margin-left: 8px;
+}
+
+.time_text {
+	position: absolute;
+	right: 0;
+	top: 0;
+	text-align: right;
+	font-size: 12px;
+	color: #9B9B9B;
+	line-height: 24px;
+	width: 102px;
+}
+
+.comment-content {
+	width: 100%;
+	margin: 12px 0;
+	font-size: 14px;
+	font-family: Source Han Sans CN;
+	font-weight: 400;
+	line-height: 18px;
+	color: rgba(53, 53, 53, 1);
+	/* 保证文章正常显示 */
+	word-wrap: break-word;
+	word-break: break-all;
+	text-overflow: ellipsis;
+	white-space: pre-wrap;
+	/**文字隐藏后添加省略号*/
+	/* display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+	overflow: hidden; */
+}
+
+.comment-menu {
+	width: 100%;
+	margin-top: 8px;
+	height: 20px;
+	position: relative;
+	padding-bottom: 9px;
+	border-bottom: 1px solid rgba(236, 236, 236, 1);
+}
+
+.operationBar{
+	position: absolute;
+	right: 0;
+	min-width: 94px;
+	display: flex;
+	height: 18px;
+}
+
+.liked {
+	background: linear-gradient(130deg, rgba(254, 110, 110, 0.84) 0%, rgba(245, 60, 60, 1) 100%);
+}
+
+/* 一条卡片的CSS结束
+ */
+
+/* <view class="comment">
+			<view class="comment-info">
+				<image :src="pathFilter(commentDetail.faceImg)" @tap="goToPersonPublic(commentDetail.fromUserId)"></image>
+				<view class="name_text">{{ commentDetail.nickname }}</view>
+						<view class="time_text">{{ timeDeal( mainComment.createDate)}}</view>
+			</view>
+			<view class="comment-content" @tap="goToCommentDetail(commentDetail)">{{ commentDetail.comment }}</view>
+			<view class="comment-menu">
+				<view class="son-comment-num" @tap="goToCommentDetail(commentDetail)">{{commentDetail.commentNum}}</view>
+				<view class="like-num" :class="{liked:commentDetail.isLike}" @tap="swLikeCommentDetail(commentDetail)">{{ commentDetail.likeNum }}</view>
+			</view>
+		</view> */

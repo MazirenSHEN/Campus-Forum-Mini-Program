@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nuoquan.mapper.nq1.OrganizationMapper">
+    <resultMap id="BaseResultMap" type="com.nuoquan.pojo.Organization">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="intro" property="intro" jdbcType="LONGVARCHAR"/>
+        <result column="division" property="division" jdbcType="LONGVARCHAR"/>
+        <result column="activity_intro" property="activityIntro" jdbcType="LONGVARCHAR"/>
+        <result column="logo_path" property="logoPath" jdbcType="VARCHAR"/>
+        <result column="official_account_link" property="officialAccountLink" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="DATE"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <!-- 返回全部status != 0(readable)的结果 -->
+    <!-- 查询全部组织时用了EXAMPLE，此处没有用上，后续可看情况删除 -->
+    <select id="queryOrganization" resultMap="BaseResultMap">
+        select * from nuoquan.organization org natural join nuoquan.organization_image
+        where
+        org.status != 0
+        order by org.create_date asc
+    </select>
+</mapper>

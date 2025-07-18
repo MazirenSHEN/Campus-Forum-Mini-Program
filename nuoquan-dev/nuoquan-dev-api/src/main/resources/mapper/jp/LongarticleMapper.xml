@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jupiter.mapper.LongarticleMapper">
+  <resultMap id="BaseResultMap" type="com.jupiter.pojo.Longarticle">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="sub_title" jdbcType="VARCHAR" property="subTitle" />
+    <result column="cover_image" jdbcType="VARCHAR" property="coverImage" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="original" jdbcType="INTEGER" property="original" />
+    <result column="tags" jdbcType="VARCHAR" property="tags" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+    <result column="like_num" jdbcType="INTEGER" property="likeNum" />
+    <result column="dislike_num" jdbcType="INTEGER" property="dislikeNum" />
+    <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
+    <result column="collect_num" jdbcType="INTEGER" property="collectNum" />
+    <result column="reported_num" jdbcType="INTEGER" property="reportedNum" />
+    <result column="popularity" jdbcType="INTEGER" property="popularity" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_date" jdbcType="VARCHAR" property="createDate" />
+    <result column="is_anonymous" jdbcType="TINYINT" property="isAnonymous" />
+    <result column="view_num" property="viewNum" jdbcType="INTEGER" />
+    <result column="category" jdbcType="VARCHAR" property="category" />
+    <result column="source" jdbcType="VARCHAR" property="source" />
+    <result column="link" jdbcType="VARCHAR" property="link" />
+    <result column="is_jump" jdbcType="INTEGER" property="isJump" />
+  </resultMap>
+</mapper>

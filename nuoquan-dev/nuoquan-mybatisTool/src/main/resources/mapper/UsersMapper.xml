@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nuoquan.mapper.UsersMapper">
+  <resultMap id="BaseResultMap" type="com.nuoquan.pojo.Users">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="unionId" jdbcType="VARCHAR" property="unionid" />
+    <result column="openId" jdbcType="VARCHAR" property="openid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="studentId" jdbcType="VARCHAR" property="studentid" />
+    <result column="gender" jdbcType="BIT" property="gender" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="year" jdbcType="BIT" property="year" />
+    <result column="major" jdbcType="VARCHAR" property="major" />
+    <result column="motto" jdbcType="VARCHAR" property="motto" />
+    <result column="cur_state" jdbcType="BIT" property="curState" />
+    <result column="cur_seat" jdbcType="VARCHAR" property="curSeat" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_visit_time" jdbcType="TIMESTAMP" property="lastVisitTime" />
+    <result column="usage_count" jdbcType="INTEGER" property="usageCount" />
+    <result column="studytime" jdbcType="INTEGER" property="studytime" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="com.nuoquan.pojo.Users">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="id" jdbcType="VARCHAR" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="face_image" jdbcType="VARCHAR" property="faceImage" />
+    <result column="fans_num" jdbcType="INTEGER" property="fansNum" />
+    <result column="follow_num" jdbcType="INTEGER" property="followNum" />
+    <result column="gender" jdbcType="INTEGER" property="gender" />
+  </resultMap>
+  <resultMap id="BaseResultMap" type="com.nuoquan.pojo.Users">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <result column="USER" jdbcType="CHAR" property="user" />
+    <result column="CURRENT_CONNECTIONS" jdbcType="BIGINT" property="currentConnections" />
+    <result column="TOTAL_CONNECTIONS" jdbcType="BIGINT" property="totalConnections" />
+  </resultMap>
+</mapper>

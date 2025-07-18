@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nuoquan.mapper.nq1.FeaturedArticleMapper" >
+    <resultMap id="BaseResultMap" type="com.nuoquan.pojo.FeaturedArticle" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        <result column="article_id" property="articleId" jdbcType="VARCHAR" />
+        <result column="cover_path" property="coverPath" jdbcType="VARCHAR" />
+        <result column="status" property="status" jdbcType="TINYINT" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <select id="queryAllFeaturedArticles" resultMap="BaseResultMap">
+        select * from nuoquan.featured_article fa left join (
+            select a.article_title, a.id article_id, u.nickname as nickname, u.face_img, u.face_img_thumb from nuoquan.article a
+                left join nuoquan.user u on u.id = a.user_id
+            where
+                1 = 1
+              and a.status = 1
+            order by a.create_date desc
+            ) fa_a_u
+            on fa_a_u.article_id = fa.id
+--         where
+--               1 = 1
+--               and fa.status = 1
+--         order by fa.create_date desc
+    </select>
+
+</mapper>
